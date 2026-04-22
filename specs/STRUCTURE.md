@@ -8,7 +8,7 @@
 
 ```
 opencode-stack/
-├── .env.example              # 环境变量模板 (PORT=4099)
+├── .env.example              # 环境变量模板 (PORT=6904)
 ├── .gitignore                # Git 忽略规则
 ├── LICENSE                   # MIT 许可证
 ├── README.md                 # 项目说明文档
@@ -99,7 +99,7 @@ src/
 | 职责 | 实现 |
 |------|------|
 | 环境加载 | `dotenv.config()` 加载 `../.env` |
-| 端口配置 | `PORT = process.env.PORT || 4099` |
+| 端口配置 | `PORT = process.env.PORT || 6904` |
 | 中间件 | `express.json()` + `express.urlencoded()` |
 | 路由注册 | 挂载 `indexRouter` 到 `/` |
 | 健康检查 | `GET /health` → `{ status: 'ok', timestamp }` |
@@ -148,7 +148,7 @@ src/
 
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
-| PORT | 4099 | 服务端口 |
+| PORT | 6904 | 服务端口 |
 | NODE_ENV | development | 环境 |
 
 ## 5. 规范文档目录说明

@@ -77,7 +77,7 @@ opencode-stack 是 **opencode 服务器的聚合服务程序**：
     |
     v
 +--------------------------+
-|    opencode-stack        |  <-- 北向接口（端口 4099）
+|    opencode-stack        |  <-- 北向接口（端口 6904）
 |                          |
 |  [认证] [路由] [代理]    |
 |  [会话管理] [健康检查]   |
@@ -189,7 +189,7 @@ npm install
 
 ```bash
 npm run dev
-# 访问 http://localhost:4099
+# 访问 http://localhost:6904
 ```
 
 ### 9.3 构建

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BASE_URL="${BASE_URL:-http://127.0.0.1:4099}"
+BASE_URL="${BASE_URL:-http://127.0.0.1:6904}"
 TEST_OPENCODE_URL="${TEST_OPENCODE_URL:-http://127.0.0.1:40960}"
 TEST_OPENCODE_USER="${TEST_OPENCODE_USER:-opencode}"
 TEST_OPENCODE_PASS="${TEST_OPENCODE_PASS:-123456}"
@@ -131,7 +131,7 @@ expect_2xx() {
   fi
 }
 
-fuser -k 4099/tcp 2>/dev/null || true
+fuser -k 6904/tcp 2>/dev/null || true
 fuser -k 40960/tcp 2>/dev/null || true
 
 bash -lc "$OPENCODE_START_CMD" > dist/test-opencode-serve.log 2>&1 &

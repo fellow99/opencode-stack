@@ -92,7 +92,7 @@ npm install
 
 ```bash
 npm run dev
-# 访问 http://localhost:4099
+# 访问 http://localhost:6904
 ```
 
 ### 构建

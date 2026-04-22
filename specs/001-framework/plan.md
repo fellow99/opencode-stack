@@ -177,7 +177,7 @@ export async function startServer() {
   await connectorManager.initialize()
   await connectorManager.start()
   
-  const PORT = process.env.PORT || 4099
+  const PORT = process.env.PORT || 6904
   app.listen(PORT, () => {
     console.log(`opencode-stack listening on http://localhost:${PORT}`)
   })

@@ -88,7 +88,7 @@ export async function loadConfig(): Promise<AppConfig> {
 
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
-| PORT | 4099 | 服务端口 |
+| PORT | 6904 | 服务端口 |
 | NODE_ENV | development | 运行环境 |
 | OPENCODE_STACK_CONFIG | - | 配置文件路径（可选） |
 
@@ -123,7 +123,7 @@ app.use(notFoundHandler)
 app.use(errorHandler)
 
 // 启动
-const PORT = process.env.PORT || 4099
+const PORT = process.env.PORT || 6904
 app.listen(PORT, () => {
   console.log(`opencode-stack listening on http://localhost:${PORT}`)
 })
@@ -286,7 +286,7 @@ export function errorHandler(
 
 ```bash
 # .env.example
-PORT=4099
+PORT=6904
 NODE_ENV=development
 
 # 后端密码（可选）

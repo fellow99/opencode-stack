@@ -9,7 +9,7 @@ import { SessionRouteTable } from './api/session/route-table';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
-const PORT = process.env.PORT || 4099;
+const PORT = process.env.PORT || 6904;
 
 // Middleware
 app.use(express.json());

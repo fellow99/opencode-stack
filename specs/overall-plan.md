@@ -359,7 +359,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production
 COPY dist ./dist
-EXPOSE 4099
+EXPOSE 6904
 CMD ["node", "dist/app.js"]
 ```
 
