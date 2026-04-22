@@ -5,6 +5,7 @@ import { createApiRouter } from './api/router';
 import { loadAppConfig } from './config/loader';
 import { ConnectorManager } from './connector';
 import { SessionRouteTable } from './api/session/route-table';
+import { logger, errorLogger, requestLoggingMiddleware } from './util/logger';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 6904;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(requestLoggingMiddleware);
 
 // Routes
 import indexRouter from './routes/index';
@@ -69,12 +71,12 @@ async function bootstrap(): Promise<void> {
 
   // Error handler
   app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    console.error('[Error]', err.message);
+    errorLogger.error('[Error] %s', err.message);
     res.status(500).json({ error: 'Internal Server Error' });
   });
 
   app.listen(PORT, () => {
-    console.log(`opencode-stack listening on http://localhost:${PORT}`);
+    logger.info('opencode-stack listening on http://localhost:%d', PORT);
   });
 
   const shutdown = async () => {
@@ -96,7 +98,7 @@ app.get('/health', (_req, res) => {
 
 void bootstrap().catch((error: unknown) => {
   const message = error instanceof Error ? error.message : 'Unknown startup error';
-  console.error(`[Startup Error] ${message}`);
+  errorLogger.error('[Startup Error] %s', message);
   process.exit(1);
 });
 

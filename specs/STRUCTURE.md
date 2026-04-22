@@ -39,7 +39,14 @@ opencode-stack/
 ├── src/                      # 源代码目录
 │   ├── app.ts                # 应用入口
 │   └── routes/
-│       └── index.ts          # 根路由
+│   │   └── index.ts          # 根路由
+│   └── util/
+│       └── logger.ts         # log4js 日志模块
+│
+├── logs/                     # 日志输出目录（git 忽略）
+│   ├── app.log               # 默认日志（按日期轮转）
+│   ├── error.log             # 错误日志（按日期轮转）
+│   └── request.log           # 请求日志（按日期轮转）
 │
 └── dist/                     # 构建输出目录（git 忽略）
 ```
@@ -85,7 +92,7 @@ src/
 │   └── index.ts              # 导出
 │
 ├── util/                     # 工具函数
-│   ├── logger.ts             # 日志
+│   ├── logger.ts             # 日志（log4js）
 │   ├── fetch.ts              # HTTP 客户端
 │   └── index.ts              # 导出
 │
@@ -183,6 +190,7 @@ src/
 | yaml | ^2.7.0 | YAML 解析 |
 | jsonc-parser | ^3.3.1 | JSONC 解析 |
 | zod | ^3.24.2 | 数据校验 |
+| log4js | latest | 日志系统 |
 
 ### 6.2 开发依赖
 

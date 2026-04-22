@@ -135,11 +135,11 @@ app.listen(PORT, () => {
 |------|--------|------|
 | 1 | express.json() | JSON 请求体解析 |
 | 2 | express.urlencoded() | URL 编码解析 |
-| 3 | requestLoggerMiddleware | 请求日志 |
+| 3 | requestLoggingMiddleware | 请求日志（log4js） |
 | 4 | corsMiddleware（可选） | CORS 处理 |
 | 5 | 路由处理器 | 业务路由 |
 | 6 | notFoundHandler | 404 处理 |
-| 7 | errorHandler | 错误处理 |
+| 7 | errorHandler | 错误处理（errorLogger） |
 
 ### 3.3 请求日志中间件
 
@@ -219,7 +219,11 @@ export function errorHandler(
 
 ## 5. 日志系统
 
-### 5.1 日志级别
+### 5.1 日志库
+
+使用 `log4js` 作为日志框架，替代原生 `console.log`/`console.error`。
+
+### 5.2 日志级别
 
 | 级别 | 说明 |
 |------|------|
@@ -228,20 +232,60 @@ export function errorHandler(
 | WARN | 警告信息 |
 | ERROR | 错误信息 |
 
-### 5.2 日志格式
+### 5.3 Appender 配置
 
-```json
-{
-  "timestamp": "2026-04-22T10:00:00.000Z",
-  "level": "INFO",
-  "service": "opencode-stack",
-  "operation": "request",
-  "method": "POST",
-  "path": "/session",
-  "status": 200,
-  "duration": 45,
-  "backend": "local"
+| 名称 | 类型 | 输出 | 说明 |
+|------|------|------|------|
+| console | console | 终端 | 带颜色格式化输出 |
+| file | dateFile | `logs/app.log` | 按日期轮转，保留 30 天 |
+| error | dateFile | `logs/error.log` | 错误专用日志 |
+| request | dateFile | `logs/request.log` | 请求专用日志，纯 JSON 格式 |
+
+### 5.4 Category 配置
+
+| 类别 | Appenders | 级别 |
+|------|-----------|------|
+| default | console, file | dev: debug / prod: info |
+| error | console, error | error |
+| request | console, request | info |
+
+### 5.5 请求日志中间件
+
+`requestLoggingMiddleware` 注册为 Express 全局中间件，在每个北向请求进入时记录：
+
+```typescript
+// src/util/logger.ts
+export function requestLoggingMiddleware(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+): void {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    requestLogger.info(JSON.stringify({
+      timestamp: new Date().toISOString(),
+      method: req.method,
+      path: req.originalUrl,
+      status: res.statusCode,
+      duration: `${duration}ms`,
+      ip: req.ip,
+    }));
+  });
+  next();
 }
+```
+
+### 5.6 日志格式
+
+**默认日志格式**（console/app.log）:
+```
+[2026-04-22 10:00:00.000] [INFO] [default] opencode-stack listening on http://localhost:6904
+```
+
+**请求日志格式**（request.log）:
+```json
+{"timestamp":"2026-04-22T10:00:00.000Z","method":"POST","path":"/session","status":200,"duration":"45ms","ip":"127.0.0.1"}
 ```
 
 ## 6. 服务启动流程
