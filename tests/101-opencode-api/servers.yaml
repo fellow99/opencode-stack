@@ -1,0 +1,10 @@
+servers:
+  - name: 本机测试
+    type: local
+    host: 127.0.0.1
+    port: 40960
+    project: /root/workspace
+    username: opencode
+    password: 123456
+    enabled: true
+    primary: true
