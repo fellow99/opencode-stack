@@ -280,8 +280,8 @@ SessionRouteTable 注册路由
 
 | 配置 | 存储位置 | 格式 |
 |------|---------|------|
-| 服务器列表 | servers.yaml | YAML |
-| 运行时设置 | servers.yaml | YAML |
+| 服务器列表 | config.yaml (opencodes) | YAML |
+| 运行时设置 | config.yaml (server) | YAML |
 
 ## 6. 错误处理架构
 

@@ -104,7 +104,12 @@
 
 ```json
 {
-  "servers": [
+  "server": {
+    "host": "0.0.0.0",
+    "port": 6904,
+    "cors": true
+  },
+  "opencodes": [
     {
       "name": "<服务器名称>",
       "type": "<服务器类型>",

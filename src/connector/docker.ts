@@ -1,8 +1,8 @@
 import { BaseConnector } from './base';
-import { ServerConfig } from './types';
+import { OpencodeConfig } from './types';
 
 export class DockerConnector extends BaseConnector {
-  constructor(config: ServerConfig) {
+  constructor(config: OpencodeConfig) {
     super(config);
   }
 

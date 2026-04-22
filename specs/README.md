@@ -152,7 +152,11 @@ opencode-stack 是 **opencode 服务器的聚合服务程序**：
 ## 8. 配置文件格式
 
 ```yaml
-servers:
+server:
+  host: 0.0.0.0
+  port: 6904
+
+opencodes:
   - name: local
     type: local
     host: 127.0.0.1

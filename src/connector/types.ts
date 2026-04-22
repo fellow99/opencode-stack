@@ -1,6 +1,12 @@
 export type ConnectorType = 'local' | 'remote' | 'docker' | 'k8s';
 
 export interface ServerConfig {
+  host?: string;
+  port?: number;
+  cors?: string[] | boolean;
+}
+
+export interface OpencodeConfig {
   name: string;
   type: ConnectorType;
   host: string;
@@ -44,7 +50,7 @@ export type Unsubscribe = () => void;
 
 export interface IConnector {
   readonly id: string;
-  readonly config: ServerConfig;
+  readonly config: OpencodeConfig;
   readonly status: ConnectorStatus;
   readonly baseUrl: string;
 
@@ -66,6 +72,7 @@ export interface SettingsConfig {
 }
 
 export interface AppConfig {
-  servers: ServerConfig[];
+  server?: ServerConfig;
+  opencodes: OpencodeConfig[];
   settings?: SettingsConfig;
 }

@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
+import cors from 'cors';
 import { createApiRouter } from './api/router';
 import { loadAppConfig } from './config/loader';
 import { ConnectorManager } from './connector';
@@ -10,7 +11,6 @@ import { logger, errorLogger, requestLoggingMiddleware } from './util/logger';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
-const PORT = process.env.PORT || 6904;
 
 // Middleware
 app.use(express.json());
@@ -54,9 +54,26 @@ function parseConfigPath(argv: string[]): string | undefined {
   return configPath;
 }
 
+function resolveCorsConfig(corsConfig: string[] | boolean | undefined): cors.CorsOptions | undefined {
+  if (corsConfig === undefined || corsConfig === null || corsConfig === false || (Array.isArray(corsConfig) && corsConfig.length === 0)) {
+    return undefined;
+  }
+  if (corsConfig === true) {
+    return { origin: true };
+  }
+  return { origin: corsConfig };
+}
+
 async function bootstrap(): Promise<void> {
   const configPath = parseConfigPath(process.argv.slice(2));
   const config = await loadAppConfig(configPath);
+
+  const corsOptions = resolveCorsConfig(config.server?.cors);
+  if (corsOptions) {
+    app.use(cors(corsOptions));
+    logger.info('CORS enabled with origins: %s', corsOptions.origin === true ? '*' : JSON.stringify(corsOptions.origin));
+  }
+
   const connectorManager = new ConnectorManager(config);
   await connectorManager.initialize();
   await connectorManager.start();
@@ -75,8 +92,11 @@ async function bootstrap(): Promise<void> {
     res.status(500).json({ error: 'Internal Server Error' });
   });
 
-  app.listen(PORT, () => {
-    logger.info('opencode-stack listening on http://localhost:%d', PORT);
+  const host = config.server?.host ?? '0.0.0.0';
+  const port = config.server?.port ?? Number(process.env.PORT) ?? 6904;
+
+  app.listen(port, host, () => {
+    logger.info('opencode-stack listening on http://%s:%d', host === '0.0.0.0' ? 'localhost' : host, port);
   });
 
   const shutdown = async () => {

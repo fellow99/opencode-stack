@@ -470,10 +470,20 @@ interface MessageAbortedError {
 
 ## 4. opencode-stack 扩展数据模型
 
-### 4.1 ServerConfig
+### 4.1 ServerConfig（聚合服务自身配置）
 
 ```typescript
 interface ServerConfig {
+  host?: string                 // 监听主机（默认 0.0.0.0）
+  port?: number                 // 监听端口（默认 6904）
+  cors?: string[] | boolean     // 允许的跨域来源，true 表示允许所有
+}
+```
+
+### 4.2 OpencodeConfig（后端 OpenCode 服务器配置）
+
+```typescript
+interface OpencodeConfig {
   name: string                  // 连接器唯一名称
   type: "local" | "remote" | "docker" | "k8s"
   host: string                  // 服务器主机
@@ -486,7 +496,7 @@ interface ServerConfig {
 }
 ```
 
-### 4.2 ConnectorStatus
+### 4.3 ConnectorStatus
 
 ```typescript
 interface ConnectorStatus {
@@ -496,7 +506,7 @@ interface ConnectorStatus {
 }
 ```
 
-### 4.3 HealthInfo
+### 4.4 HealthInfo
 
 ```typescript
 interface HealthInfo {
@@ -505,7 +515,7 @@ interface HealthInfo {
 }
 ```
 
-### 4.4 SessionRoute
+### 4.5 SessionRoute
 
 ```typescript
 interface SessionRoute {
@@ -515,7 +525,7 @@ interface SessionRoute {
 }
 ```
 
-### 4.5 BackendStatus
+### 4.6 BackendStatus
 
 ```typescript
 interface BackendStatus {
@@ -544,7 +554,8 @@ interface SettingsConfig {
 
 ```typescript
 interface AppConfig {
-  servers: ServerConfig[]
+  server?: ServerConfig
+  opencodes: OpencodeConfig[]
   settings?: SettingsConfig
 }
 ```

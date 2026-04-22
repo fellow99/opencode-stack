@@ -19,15 +19,15 @@ function resolvePassword(raw?: string): string | undefined {
 
 function normalizeInput(input: AppConfig): AppConfig {
   return {
-    ...input,
-    servers: (input.servers ?? []).map((server) => ({
+    server: input.server ?? {},
+    opencodes: (input.opencodes ?? []).map((server) => ({
       ...server,
       username: server.username ?? 'opencode',
       enabled: server.enabled ?? true,
       primary: server.primary ?? false,
       password: resolvePassword(server.password),
     })),
-  };
+  } as AppConfig;
 }
 
 function formatValidationError(error: ZodError): string {
@@ -36,7 +36,8 @@ function formatValidationError(error: ZodError): string {
 
 export async function loadAppConfig(configPath?: string): Promise<AppConfig> {
   const defaultConfig: AppConfig = {
-    servers: [
+    server: {},
+    opencodes: [
       {
         name: 'local',
         type: 'local',
@@ -51,7 +52,7 @@ export async function loadAppConfig(configPath?: string): Promise<AppConfig> {
   const explicitPath = typeof configPath === 'string' && configPath.trim().length > 0;
   const resolvedPath = explicitPath
     ? path.resolve(process.cwd(), configPath)
-    : path.resolve(process.cwd(), 'servers.yaml');
+    : path.resolve(process.cwd(), 'config.yaml');
 
   try {
     const content = await fs.readFile(resolvedPath, 'utf8');
@@ -64,7 +65,7 @@ export async function loadAppConfig(configPath?: string): Promise<AppConfig> {
         return AppConfigSchema.parse(normalizeInput(defaultConfig));
       }
       const message = error instanceof Error ? error.message : 'unknown YAML parse error';
-      throw new Error(`Invalid YAML in config file (${resolvedPath}): ${message}`);
+      throw new Error(`Invalid YAML config file (${resolvedPath}): ${message}`);
     }
 
     if (!parsed || typeof parsed !== 'object') {

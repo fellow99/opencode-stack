@@ -301,7 +301,7 @@ export class ConnectorManager {
 initialize()
     │
     v
-遍历 servers 配置
+遍历 opencodes 配置
     │
     v
 根据 type 创建对应 Connector

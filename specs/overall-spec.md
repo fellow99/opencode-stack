@@ -272,7 +272,11 @@ SessionRouteTable 注册路由
 ### 8.1 服务器配置结构
 
 ```yaml
-servers:
+server:
+  host: 0.0.0.0
+  port: 6904
+
+opencodes:
   - name: local
     type: local
     host: 127.0.0.1

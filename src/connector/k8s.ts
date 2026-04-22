@@ -1,8 +1,8 @@
 import { BaseConnector } from './base';
-import { ServerConfig } from './types';
+import { OpencodeConfig } from './types';
 
 export class K8sConnector extends BaseConnector {
-  constructor(config: ServerConfig) {
+  constructor(config: OpencodeConfig) {
     super(config);
   }
 

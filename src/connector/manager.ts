@@ -4,7 +4,7 @@ import { HealthCheckManager } from './health-check';
 import { K8sConnector } from './k8s';
 import { LocalConnector } from './local';
 import { RemoteConnector } from './remote';
-import { AppConfig, IConnector, ServerConfig } from './types';
+import { AppConfig, IConnector, OpencodeConfig } from './types';
 
 export class ConnectorManager {
   private readonly connectors = new Map<string, IConnector>();
@@ -14,7 +14,7 @@ export class ConnectorManager {
   constructor(private readonly config: AppConfig) {}
 
   public async initialize(): Promise<void> {
-    for (const server of this.config.servers) {
+    for (const server of this.config.opencodes) {
       if (server.enabled === false) {
         continue;
       }
@@ -77,7 +77,7 @@ export class ConnectorManager {
     return response.body;
   }
 
-  private createConnector(server: ServerConfig): IConnector {
+  private createConnector(server: OpencodeConfig): IConnector {
     switch (server.type) {
       case 'local':
         return new LocalConnector(server, this.config.settings?.healthCheckTimeout);

@@ -191,6 +191,7 @@ src/
 | jsonc-parser | ^3.3.1 | JSONC 解析 |
 | zod | ^3.24.2 | 数据校验 |
 | log4js | latest | 日志系统 |
+| cors | latest | 跨域支持 |
 
 ### 6.2 开发依赖
 

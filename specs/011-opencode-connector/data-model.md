@@ -84,7 +84,7 @@ interface ProxyResponse {
 
 ```typescript
 interface AppConfig {
-  servers: ServerConfig[]          // 服务器配置列表
+  opencodes: OpencodeConfig[]      // 后端 OpenCode 服务器配置列表
   settings?: SettingsConfig        // 运行时设置
 }
 ```
@@ -185,7 +185,7 @@ const SettingsConfigSchema = z.object({
 
 ```typescript
 const AppConfigSchema = z.object({
-  servers: z.array(ServerConfigSchema).min(1, 'at least one server required'),
+  opencodes: z.array(OpencodeConfigSchema).min(1, 'at least one opencode required'),
   settings: SettingsConfigSchema.optional(),
 })
 ```
@@ -195,7 +195,7 @@ const AppConfigSchema = z.object({
 ### 5.1 YAML 格式
 
 ```yaml
-servers:
+opencodes:
   - name: local
     type: local
     host: 127.0.0.1
@@ -224,7 +224,7 @@ settings:
 
 ```json
 {
-  "servers": [
+  "opencodes": [
     {
       "name": "local",
       "type": "local",

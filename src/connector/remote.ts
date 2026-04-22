@@ -1,8 +1,8 @@
 import { BaseConnector } from './base';
-import { ServerConfig } from './types';
+import { OpencodeConfig } from './types';
 
 export class RemoteConnector extends BaseConnector {
-  constructor(config: ServerConfig, timeoutMs?: number) {
+  constructor(config: OpencodeConfig, timeoutMs?: number) {
     if (!config.project) {
       throw new Error('Remote connector requires project path');
     }

@@ -144,7 +144,8 @@ const reader = response.body?.getReader()
 
 | 配置 | 位置 | 格式 |
 |------|------|------|
-| 服务器配置 | ./servers.yaml | YAML |
+| 聚合服务配置 | ./config.yaml (server) | YAML |
+| 后端服务器配置 | ./config.yaml (opencodes) | YAML |
 | 环境变量 | ./.env | dotenv |
 | TypeScript 配置 | ./tsconfig.json | JSON |
 

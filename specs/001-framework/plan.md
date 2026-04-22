@@ -48,10 +48,10 @@ import { parse as parseJSONC } from 'jsonc-parser'
 import { AppConfigSchema, AppConfig } from './schema'
 
 const CONFIG_FILES = [
-  'servers.yaml',
-  'servers.yml',
-  'servers.json',
-  'servers.jsonc',
+  'config.yaml',
+  'config.yml',
+  'config.json',
+  'config.jsonc',
 ]
 
 export async function findConfigFile(): Promise<string | null> {
@@ -114,7 +114,7 @@ export function resolveEnvVariables(obj: any): any {
 export async function loadConfig(): Promise<AppConfig> {
   const configFile = await findConfigFile()
   if (!configFile) {
-    throw new Error('Configuration file not found. Create servers.yaml')
+    throw new Error('Configuration file not found. Create config.yaml')
   }
   
   const content = await parseConfigFile(configFile)
@@ -221,9 +221,9 @@ export function requestLoggerMiddleware(
 
 | 测试 | 内容 |
 |------|------|
-| YAML 解析 | 正确解析 servers.yaml |
-| JSON 解析 | 正确解析 servers.json |
-| JSONC 解析 | 正确解析 servers.jsonc（含注释） |
+| YAML 解析 | 正确解析 config.yaml (opencodes) |
+| JSON 解析 | 正确解析 config.json (opencodes) |
+| JSONC 解析 | 正确解析 config.jsonc（含注释） |
 | 环境变量替换 | ${VAR} 正确替换 |
 | Schema 校验 | 无效配置抛出错误 |
 | 默认值 | 未指定字段使用默认值 |

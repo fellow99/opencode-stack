@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const ServerConfigSchema = z
+export const OpencodeConfigSchema = z
   .object({
     name: z.string().min(1),
     type: z.enum(['local', 'remote', 'docker', 'k8s']),
@@ -18,8 +18,15 @@ export const ServerConfigSchema = z
     }
   });
 
+export const ServerConfigSchema = z.object({
+  host: z.string().optional(),
+  port: z.number().int().positive().optional(),
+  cors: z.union([z.array(z.string()), z.boolean()]).optional(),
+});
+
 export const AppConfigSchema = z.object({
-  servers: z.array(ServerConfigSchema).min(1),
+  server: ServerConfigSchema.optional(),
+  opencodes: z.array(OpencodeConfigSchema).min(1),
   settings: z
     .object({
       healthCheckInterval: z.number().int().positive().default(30000),

@@ -31,7 +31,7 @@ async initialize(): Promise<void>
 ```
 
 **流程**：
-1. 遍历配置中的 servers
+1. 遍历配置中的 opencodes
 2. 根据 type 创建对应 Connector
 3. 调用 connector.connect()
 4. 存储到内部 Map

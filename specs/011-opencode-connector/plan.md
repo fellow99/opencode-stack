@@ -275,7 +275,7 @@ export class ConnectorManager {
   constructor(private config: AppConfig) {}
   
   async initialize(): Promise<void> {
-    for (const serverConfig of this.config.servers) {
+    for (const serverConfig of this.config.opencodes) {
       if (!serverConfig.enabled) continue
       
       let connector: IConnector

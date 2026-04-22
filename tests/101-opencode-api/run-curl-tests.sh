@@ -7,7 +7,7 @@ TEST_OPENCODE_USER="${TEST_OPENCODE_USER:-opencode}"
 TEST_OPENCODE_PASS="${TEST_OPENCODE_PASS:-123456}"
 REPORT_DATE="$(date +%Y%m%d)"
 REPORT_FILE="dist/test[101-opencode-api]-${REPORT_DATE}.md"
-STACK_START_CMD="${STACK_START_CMD:-node dist/app.js -c tests/101-opencode-api/servers.yaml}"
+STACK_START_CMD="${STACK_START_CMD:-node dist/app.js -c tests/101-opencode-api/config.yaml}"
 OPENCODE_START_CMD="${OPENCODE_START_CMD:-OPENCODE_SERVER_USERNAME=opencode OPENCODE_SERVER_PASSWORD=123456 opencode serve --hostname 127.0.0.1 --port 40960}"
 
 pass_count=0

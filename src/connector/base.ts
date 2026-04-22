@@ -4,9 +4,9 @@ import {
   ConnectorStatus,
   HealthInfo,
   IConnector,
+  OpencodeConfig,
   ProxyRequest,
   ProxyResponse,
-  ServerConfig,
   Unsubscribe,
 } from './types';
 
@@ -18,7 +18,7 @@ export abstract class BaseConnector implements IConnector {
     lastCheck: undefined,
   };
 
-  constructor(public readonly config: ServerConfig, private readonly timeoutMs: number = 5000) {}
+  constructor(public readonly config: OpencodeConfig, private readonly timeoutMs: number = 5000) {}
 
   public get id(): string {
     return this.config.name;
