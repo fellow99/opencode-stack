@@ -226,7 +226,7 @@ async function handleCreateSession(ctx: ApiContext, req: express.Request): Promi
 function respondProxy(res: express.Response, payload: { status: number; headers: Record<string, string>; body: unknown }): void {
   for (const [key, value] of Object.entries(payload.headers)) {
     const lower = key.toLowerCase();
-    if (lower === 'content-length' || lower === 'connection' || lower === 'transfer-encoding') {
+    if (lower === 'content-length' || lower === 'connection' || lower === 'transfer-encoding' || lower === 'content-encoding') {
       continue;
     }
     res.setHeader(key, value);
