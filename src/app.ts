@@ -93,7 +93,7 @@ async function bootstrap(): Promise<void> {
   });
 
   const host = config.server?.host ?? '0.0.0.0';
-  const port = config.server?.port ?? Number(process.env.PORT) ?? 6904;
+  const port = config.server?.port ?? (Number(process.env.PORT) || 6904);
 
   app.listen(port, host, () => {
     logger.info('opencode-stack listening on http://%s:%d', host === '0.0.0.0' ? 'localhost' : host, port);
